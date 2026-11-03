@@ -1,0 +1,34 @@
+/* Admin-only styles (loaded with the lazy admin chunk). Colours come from the site tokens. */
+.adm .btn { padding: 0.5rem 0.9rem; font-size: 0.8125rem; letter-spacing: 0.02em; }
+@media (max-width: 767px), (pointer: coarse) {
+  .adm .btn, .adm [role="tab"], .adm .input, .adm .navlink, .adm .tap, .adm button.btn.fill { min-height: 44px; }
+  .adm .navlink { display: flex; align-items: center; }
+  .adm .tap { display: inline-flex; align-items: center; padding-inline: 0.25rem; min-width: 44px; }
+  .adm label.tap-check { min-height: 44px; }
+}
+.adm .order-foot th, .adm .order-foot td { background: var(--surface); }
+.adm .order-foot th { font-size: 0.875rem; text-transform: none; letter-spacing: 0; color: var(--fg); font-weight: 500; }
+.adm .btn.danger { color: var(--danger); border-color: var(--danger); }
+.adm .btn.danger:hover { background: var(--danger); color: var(--bg); border-color: var(--danger); }
+.adm .btn.fill.danger { background: var(--danger); color: var(--bg); }
+.adm .btn.fill.danger:hover { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+.adm .input { padding: 0.5rem 0.7rem; font-size: 0.9375rem; background: var(--bg); }
+.adm textarea.input { line-height: 1.5; }
+.adm th { font-weight: 600; font-size: 0.75rem; letter-spacing: 0.04em; text-transform: uppercase; color: var(--mut); background: var(--surface); }
+.adm th, .adm td { padding: 0.55rem 0.75rem; vertical-align: middle; }
+.adm tbody tr { border-top: 1px solid var(--line); }
+.adm [role="region"][tabindex="0"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.adm .navlink[aria-current="page"] { background: var(--bg); color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
+.adm .navlink { border-left: 3px solid transparent; }
+.adm .navlink:hover { background: var(--bg); }
+.print-only { display: none; }
+
+@media print {
+  body::before { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  .no-print, .adm-side, .adm-top, .skip { display: none !important; }
+  .print-only { display: block !important; }
+  .adm-main { margin: 0 !important; padding: 0 !important; }
+  .adm { display: block !important; background: #fff !important; color: #000 !important; }
+  .print-only table, .print-only th, .print-only td { border: 1px solid #000; border-collapse: collapse; color: #000; background: #fff; }
+}

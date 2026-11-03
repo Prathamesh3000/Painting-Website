@@ -1,0 +1,64 @@
+/* Homepage: gallery-wall sections with generous whitespace. Tokens come from index.css. */
+.section { padding: var(--section-space) 6vw; }
+/* Below-the-fold sections are not laid out or painted until they near the screen (big first-load saving). */
+.section, .news { content-visibility: auto; contain-intrinsic-size: auto 48rem; }
+.container { max-width: 72rem; margin: 0 auto; }
+.section h2 { font-size: clamp(2.25rem, 4.6vw, 3.75rem); margin-bottom: 1.25rem; }
+.lead { max-width: 40rem; color: var(--mut); font-size: 1.125rem; }
+
+/* Hero: text beside a mounted painting (mat + hairline frame, no shadow). */
+.hero { padding: clamp(2.5rem, 7vw, 6rem) 6vw 0; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(2rem, 6vw, 5rem); align-items: center; max-width: 76rem; margin: 0 auto; }
+@media (min-width: 880px) { .hero-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); } }
+.hero h1 { font-size: clamp(3rem, 7vw, 6rem); max-width: 12ch; }
+.hero-copy p { max-width: 34rem; margin: 1.5rem 0 2rem; font-size: 1.1875rem; color: var(--mut); }
+.cta { display: flex; gap: 0.9rem; flex-wrap: wrap; }
+.mat { padding: clamp(0.6rem, 2vw, 1.5rem); background: var(--surface); border: 1px solid var(--line); }
+.frame { overflow: hidden; aspect-ratio: 4 / 5; max-height: 78vh; margin: 0 auto; }
+.frame-inner { height: 100%; }
+.frame svg, .frame img { display: block; width: 100%; height: 100%; }
+
+/* Gallery wall: each work keeps its true proportions. */
+.walls { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); gap: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 3vw, 2.5rem); margin-top: 3rem; align-items: start; }
+.walls .cv { display: flex; align-items: center; justify-content: center; aspect-ratio: 4 / 5; background: var(--surface); border: 1px solid var(--line); }
+.cv-art { display: block; overflow: hidden; }
+.cv-art > svg, .cv-art > img { width: 100%; height: 100%; display: block; object-fit: cover; }
+.lab { display: flex; flex-direction: column; gap: 0.15rem; font-size: 0.9375rem; margin-top: 1rem; }
+.lab b { font: 500 1.875rem/1.1 var(--font-serif); }
+.lab span { color: var(--mut); }
+.lab em { font-style: normal; font-weight: 500; margin: 0.25rem 0 0.6rem; }
+.lab .row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.lab .btn { padding: 0.55rem 1rem; font-size: 0.8125rem; }
+
+.closeup { margin-top: 2.5rem; }
+.closeup .frame { aspect-ratio: 16 / 9; max-height: 60vh; }
+
+.artist-grid { display: grid; gap: clamp(2rem, 6vw, 5rem); align-items: center; max-width: 72rem; margin: 0 auto; }
+@media (min-width: 820px) { .artist-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.portrait { aspect-ratio: 3 / 4; background: var(--surface); border: 1px solid var(--line); display: grid; place-items: center; text-align: center; padding: 2rem; color: var(--mut); font-size: 0.875rem; }
+.artist-grid p { max-width: 34rem; color: var(--mut); margin-bottom: 2rem; font-family: var(--font-serif); font-size: 1.5rem; line-height: 1.6; }
+
+.band { background: var(--band); color: var(--on-band); }
+.pil-grid { display: grid; gap: 2.5rem; max-width: 72rem; margin: 0 auto; }
+@media (min-width: 820px) { .pil-grid { grid-template-columns: repeat(3, 1fr); } }
+.pil .name { font: 500 clamp(2.25rem, 4.5vw, 3.5rem)/1.1 var(--font-serif); border-top: 1px solid var(--on-band-mut); padding-top: 1.25rem; }
+.pil .desc { margin-top: 0.75rem; max-width: 22rem; color: var(--on-band-mut); font-size: 1.0625rem; }
+
+.purpose { background: var(--surface); text-align: center; }
+.big { font: 500 clamp(6rem, 18vw, 15rem)/0.9 var(--font-serif); color: var(--accent); }
+.purpose h2 { max-width: 44rem; margin: 0 auto 1rem; }
+.purpose p { max-width: 38rem; margin: 1.25rem auto 1.75rem; color: var(--mut); }
+.pts { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.pts span { border: 1px solid var(--mut); padding: 0.35rem 0.9rem; border-radius: 99px; font-size: 0.875rem; }
+
+.poem-quote { max-width: 46rem; margin: 0 auto; }
+.poem-quote p { font: 500 clamp(1.9rem, 3.8vw, 3rem)/1.35 var(--font-serif); }
+.poem-quote small { display: block; margin-top: 1.75rem; color: var(--mut); font-size: 0.9375rem; }
+
+.news { background: var(--band); color: var(--on-band); padding: var(--section-space) 6vw; display: grid; gap: 2.5rem; align-items: end; }
+@media (min-width: 820px) { .news { grid-template-columns: 1.2fr 1fr; gap: 6vw; } }
+.news h2 { font-size: clamp(2.25rem, 4vw, 3.5rem); }
+.news form { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.news input { flex: 1; min-width: 12rem; padding: 0.85rem; border: 1px solid var(--on-band-mut); background: transparent; color: inherit; border-radius: 2px; font: inherit; }
+.news input::placeholder { color: var(--on-band-mut); opacity: 1; }
+.news .btn { color: var(--on-band); }

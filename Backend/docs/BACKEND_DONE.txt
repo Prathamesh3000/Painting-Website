@@ -1,0 +1,20 @@
+BACKEND DONE
+
+Run
+  cd Backend
+  npm install
+  copy .env.example to .env (set MONGODB_URI, CLIENT_ORIGIN, ADMIN_SECRET >= 32 chars for production)
+  npm run seed
+  npm run create-admin -- --email you@example.com      (ADMIN_PASSWORD env or hidden prompt, min 12 chars)
+  npm start   (or npm run dev)
+
+Tests
+  MONGODB_URI=mongodb://127.0.0.1:27556/ npm test
+  Result of the final run: tests 34, pass 34, fail 0
+  (auth.test.js 9, ratelimit.test.js 1, catalog.test.js 10, media.test.js 6, orders.test.js 8)
+
+Also verified manually: npm run seed twice (idempotent), create-admin (short password rejected, create, update),
+NODE_ENV=production without ADMIN_SECRET refuses to start, real server on PORT=5056 login + public endpoints.
+Not verified: the hidden interactive password prompt of create-admin (needs a TTY).
+
+New dependency: multer (^2.5.0) only.

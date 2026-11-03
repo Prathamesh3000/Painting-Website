@@ -1,0 +1,126 @@
+@import "tailwindcss";
+@import "./fonts.css";
+
+/* ───────────────────────────── Design tokens ─────────────────────────────
+   Edit colours, type and motion speed here; every page reads these variables.
+   Light values come from the brief's palette (ivory / charcoal / terracotta / sand).
+   Contrast (WCAG): text 13.9:1, muted 5.3:1, accent 5.7:1 on the page background. */
+:root {
+  --bg: #F5F0E8;          /* page */
+  --surface: #EBE3D6;     /* mats, panels, cards */
+  --line: #D8C9B6;        /* hairlines, borders (sand) */
+  --fg: #25221F;          /* text (charcoal) */
+  --mut: #6B6258;         /* secondary text */
+  --accent: #7A5640;      /* links, buttons, focus — deepened terracotta (the original #9A755B was 3.65:1, below AA) */
+  --on-accent: #F5F0E8;   /* text on accent buttons */
+  --band: #25221F;        /* dark bands: pillars, newsletter, footer */
+  --on-band: #F5F0E8;
+  --on-band-mut: #D8C9B6;
+  --danger: #9B1C1C;      /* form errors */
+
+  --motion-speed: 1;      /* 1 = designed pace · 2 = twice as slow · 0.5 = twice as fast · 0 = no motion */
+  --section-space: clamp(4.5rem, 10vw, 9rem);
+  --measure-poem: 34rem;  /* width of the poem reading column */
+  --grain-opacity: 0.05;  /* paper texture strength; 0 turns it off */
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1C1917; --surface: #2A2521; --line: #3B342E; --fg: #F5F0E8; --mut: #CFC3B2;
+    --accent: #C79A7C; --on-accent: #1C1917; --band: #121010; --on-band: #F5F0E8; --on-band-mut: #D8C9B6; --danger: #F2A59C;
+    --grain-opacity: 0.04;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1C1917; --surface: #2A2521; --line: #3B342E; --fg: #F5F0E8; --mut: #CFC3B2;
+  --accent: #C79A7C; --on-accent: #1C1917; --band: #121010; --on-band: #F5F0E8; --on-band-mut: #D8C9B6; --danger: #F2A59C;
+  --grain-opacity: 0.04;
+}
+
+@theme inline {
+  --color-ivory: var(--bg);
+  --color-charcoal: var(--fg);
+  --color-terracotta: var(--accent);
+  --color-sand: var(--line);
+  --color-panel: var(--surface);
+  --color-mut: var(--mut);
+  --color-band: var(--band);
+  --color-danger: var(--danger);
+  --font-serif: "Cormorant Garamond", "Cormorant Fallback", "Noto Serif Devanagari", Georgia, serif;
+  --font-sans: "Inter", "Inter Fallback", system-ui, sans-serif;
+}
+
+/* Fallback faces sized to match the web fonts (measured: Inter is 107.3% of Arial, Cormorant 88.8% of Georgia),
+   so text does not jump when the real fonts arrive. */
+@font-face { font-family: "Inter Fallback"; src: local("Arial"); size-adjust: 107.3%; }
+@font-face { font-family: "Cormorant Fallback"; src: local("Georgia"); size-adjust: 88.8%; }
+
+/* ───────────────────────────── Base ───────────────────────────── */
+html { scroll-padding-top: 5rem; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 1rem/1.7 var(--font-sans);
+  overflow-x: hidden;
+}
+/* Cormorant is delicate: keep it at weight 500+ and 28px+ (headings and titles only). */
+h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 500; line-height: 1.12; letter-spacing: -0.005em; }
+h4 { font-family: var(--font-sans); font-weight: 500; line-height: 1.4; letter-spacing: 0.12em; }
+:lang(mr) { font-family: "Noto Serif Devanagari", var(--font-serif); letter-spacing: 0; }
+/* Devanagari glyphs sit smaller than Latin at the same size; nudge inline Marathi (titles, links) up to match. */
+span:lang(mr), a:lang(mr) { font-size: 1.1em; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.band :focus-visible, .foot :focus-visible { outline-color: var(--on-band); }
+a { text-underline-offset: 0.2em; }
+
+/* Paper grain: one static, non-animated overlay. Set --grain-opacity: 0 to remove. */
+body::before {
+  content: ""; position: fixed; inset: 0; z-index: 60; pointer-events: none; opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ───────────────────────────── Components ───────────────────────────── */
+.btn {
+  display: inline-block; padding: 0.85rem 1.6rem; font: 500 0.875rem/1.2 var(--font-sans); letter-spacing: 0.04em;
+  border: 1px solid currentColor; border-radius: 2px; background: transparent; color: inherit;
+  cursor: pointer; text-align: center; text-decoration: none;
+  transition: background-color calc(0.4s * var(--motion-speed)), color calc(0.4s * var(--motion-speed));
+}
+.btn:hover { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.btn.fill, .btn-dark { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn.fill:hover, .btn-dark:hover { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+.band .btn:hover, .news .btn:hover { background: var(--on-band); border-color: var(--on-band); color: var(--band); }
+.btn:disabled, .btn[disabled] { opacity: 0.5; cursor: default; }
+.btn:disabled:hover { background: transparent; color: inherit; border-color: currentColor; }
+.input {
+  width: 100%; background: transparent; border: 1px solid var(--mut); border-radius: 2px;
+  padding: 0.75rem 0.9rem; font-size: 1rem; color: inherit;
+}
+.input:focus { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 1px; }
+
+/* Poems: a narrow, quiet reading column. Devanagari needs more leading for its matras. */
+.poem-text { font-family: var(--font-serif); font-size: clamp(1.35rem, 2.4vw, 1.65rem); line-height: 1.85; }
+.poem-text:lang(mr) { line-height: 2.1; font-size: clamp(1.25rem, 2.2vw, 1.5rem); }
+
+/* ───────────────────────────── Motion ─────────────────────────────
+   All timings are multiplied by --motion-speed. The `motion` class is added to <html> by main.jsx only when the
+   visitor has NOT asked for reduced motion, so without it (or without JS) everything is simply visible. */
+.motion [data-reveal] {
+  opacity: 0; transform: translateY(1.5rem);
+  transition: opacity calc(0.9s * var(--motion-speed)) cubic-bezier(0.22, 0.61, 0.36, 1),
+              transform calc(0.9s * var(--motion-speed)) cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.motion [data-reveal].is-in { opacity: 1; transform: none; }
+
+/* Hero painting wipes in once, left to right, like wet ink. */
+.motion .hero .mat { animation: ink calc(1.8s * var(--motion-speed)) cubic-bezier(0.65, 0, 0.35, 1) both; }
+@keyframes ink { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+/* Poem lines appear one after another; the first starts at once so the poem is never blank. */
+.motion .poem-line { animation: line-in calc(1.2s * var(--motion-speed)) cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(var(--i, 0) * 0.45s * var(--motion-speed)); }
+@keyframes line-in { from { opacity: 0; transform: translateY(0.9rem); } to { opacity: 1; transform: none; } }
+
+/* Backstop for the OS-level setting (the JS side also skips the reveal and parallax). */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation: none !important; scroll-behavior: auto !important; }
+}
