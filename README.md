@@ -1,6 +1,6 @@
 # Kalpana Jagtap - website
 
-A website for the artist Kalpana Jagtap: a public gallery of paintings, a poetry journal (English and Marathi), a guest checkout that records orders, contact / custom-art / newsletter forms, and a private admin panel where the owner manages everything without touching code.
+A website for the artist Kalpana Jagtap: a public gallery of paintings, a poetry journal (English and Marathi), a page about the cause the proceeds support (with bank/UPI donation details and a receipt request), a guest checkout that records orders, contact / custom-art / newsletter forms, a site-wide English–Marathi switch, and a private admin panel where the owner manages everything without touching code.
 
 This repository has two apps:
 
@@ -19,9 +19,11 @@ Other documents:
 
 Included:
 
-* Public pages: Home, About, Art (gallery) and each painting, Poetry and each poem, Cart, Checkout, Order confirmation, Track an order, Contact, Custom art, FAQs, Shipping and returns, Privacy, Terms.
+* Public pages: Home, About, Art (gallery, filterable by availability and series) and each painting, The cause (impact figures, programmes, how proceeds flow, donation details), Poetry and each poem, Cart, Checkout, Order confirmation, Track an order, Contact (with a subject: general, acquisition, collaboration, donation), Custom art, FAQs, Shipping and returns, Privacy, Terms.
+* A donation panel (bank details, UPI QR code generated in the browser, receipt request) opened from the Support button, the home page and sold artworks, and shown inline on the cause page. Account details are entered in the admin panel; nothing is shown until they are.
+* English / Marathi toggle in the menu. Fixed labels are translated in `Frontend/src/i18n.js`; editable texts have Marathi versions in the admin "Marathi" content group (empty = English shown). The choice is remembered in the browser.
 * Guest checkout that creates an order and (for one-of-a-kind originals) reserves the painting so two people cannot buy it.
-* Admin panel (`/admin`): Dashboard, Artworks, Poems, Orders, Enquiries (general, custom art, newsletter with CSV export), Site content, Media library, Settings, Audit log, Account (change password).
+* Admin panel (`/admin`): Dashboard, Artworks (with series, year and Marathi title), Poems, Orders, Enquiries (general, acquisitions, collaboration, donations, custom art, newsletter; CSV export per tab), Site content (including the Cause, Donations and Marathi groups), Media library, Settings, Audit log, Account (change password).
 * Admin sign-in with an 8-hour session cookie.
 
 **Not included:**
@@ -95,9 +97,15 @@ Optional tuning variables that exist in the code but are not in `.env.example`: 
 
 Frontend (`Frontend/.env`): `VITE_API_URL`, the API base URL including `/api`. It is baked into the build, so rebuild after changing it.
 
+## Design assets
+
+* Fonts are self-hosted in `Frontend/public/fonts/` (Playfair Display for headlines, Jost for interface text, Noto Serif Devanagari for Marathi). Colours, type and motion speed are the CSS variables at the top of `Frontend/src/index.css`.
+* Photographs and textures used by the design live in `Frontend/public/img/` as WebP (gallery hero, studio photograph, line portrait, watercolour washes, the living-room photograph behind the "In a room" preview). The originals are in `kp/`.
+
 ## How it fits together
 
 * The browser loads the static site from `Frontend/dist/`. All pages are client-side routes, so the web server must fall back to `index.html` for unknown paths.
 * The site calls the API at `VITE_API_URL`. Uploaded images are served by the API at `/uploads/...` on the same origin as the API URL (the site derives the image origin by removing `/api` from `VITE_API_URL`).
 * The admin panel is part of the same app at `/admin`. It signs in with an `HttpOnly`, `SameSite=Strict` cookie limited to the path `/api`.
 * Paintings, poems, orders, enquiries, settings and the editable site text live in MongoDB. Uploaded images live in the upload folder. Both must be backed up together.
+# PAINTING-WEBSITE
